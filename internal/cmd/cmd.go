@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"boysave/internal/controller/user"
 	"context"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -18,9 +19,13 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Middleware(
+					ghttp.MiddlewareHandlerResponse,
+					ghttp.MiddlewareCORS,
+				)
 				group.Bind(
 					hello.New(),
+					user.New(),
 				)
 			})
 
